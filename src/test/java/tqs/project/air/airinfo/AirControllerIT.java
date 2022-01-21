@@ -56,7 +56,6 @@ public class AirControllerIT {
                 .param("features", "co,so2,no2,o3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(3)))
                 .andExpect(jsonPath("$.listOfPollutants", hasKey("co")))
                 .andExpect(jsonPath("$.listOfPollutants", hasKey("so2")))
                 .andExpect(jsonPath("$.listOfPollutants", hasKey("o3")))
