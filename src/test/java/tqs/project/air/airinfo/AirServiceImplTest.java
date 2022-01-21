@@ -36,27 +36,6 @@ public class AirServiceImplTest {
 
     }
 
-    @Test
-    public void getAirQualityByLocalNFeatures_NotInCache_Test(){
-        when(airRepository.getData(48.857456, 2.354611)).thenReturn(null);
-
-        String[] features = new String[3];
-        features[0] = "co";
-        features[1] = "so2";
-        features[2] = "pm25";
-
-        AirRequest airResult = airServiceImpl.getAirQualityByLocal(48.857456, 2.354611, features);
-
-        AirRequest airExpected = new AirRequest(data);
-        airExpected.excludeAirMetric("no2");
-        airExpected.excludeAirMetric("o3");
-        airExpected.excludeAirMetric("pm10");
-
-        assertEquals(airExpected, airResult);
-        verify(airRepository, times(1)).putData(anyDouble(), anyDouble(), anyString());
-        verify(airRepository, times(1)).getData(anyDouble(), anyDouble());
-
-    }
 
     @Test
     public void getAirQualityByLocalNFeatures_InCache_Test(){
