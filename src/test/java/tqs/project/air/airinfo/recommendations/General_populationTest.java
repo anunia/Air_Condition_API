@@ -11,11 +11,7 @@ import tqs.project.air.airinfo.qualitymetrics.SO2;
 
 class General_populationTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
-	
+
     private Recommendations active;
     private Recommendations heart_diseases;
 
