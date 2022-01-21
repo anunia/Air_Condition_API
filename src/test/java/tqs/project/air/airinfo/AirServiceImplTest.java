@@ -30,7 +30,7 @@ public class AirServiceImplTest {
     public void setupMocks(){
 
         MockitoAnnotations.initMocks(this);
-        ReflectionTestUtils.setField( airServiceImpl, "key", "f8e686b5d7e145b1b64752921eb03f25");
+        ReflectionTestUtils.setField( airServiceImpl, "key", "3e57c3d103b342bea69f76f1a1d28476");
         ReflectionTestUtils.setField( airServiceImpl, "features", "breezometer_aqi,local_aqi,health_recommendations,sources_and_effects,pollutants_concentrations,pollutants_aqi_information");
         ReflectionTestUtils.setField( airServiceImpl, "url", "https://api.breezometer.com/air-quality/v2/current-conditions?");
 
