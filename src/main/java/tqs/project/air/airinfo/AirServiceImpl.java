@@ -54,14 +54,14 @@ public class AirServiceImpl implements AirService {
     }
 
     @Override
-    public AirRequest getAirQualityByLocal(double lat, double lon, String[] features) {
-        AirRequest airRequest = airRepository.getData(lat, lon);
+    public AirRequest getAirQualityByLocal(double lat, double lon, String[] polutants, String[] health_recommendations) {
+        AirRequest airRequest = this.airRepository.getData(lat, lon);
         if (airRequest == null){
             try {
                 String getResult = sendGET("" + lat, "" + lon);
-                airRequest = new AirRequest(getResult);
+//               airRequest = new AirRequest(getResult);
 
-                this.airRepository.putData(lat, lon, getResult);
+                airRequest = this.airRepository.putData(lat, lon, getResult);
             } catch (Exception e){
                 return null;
             }
@@ -75,13 +75,14 @@ public class AirServiceImpl implements AirService {
                 airRequest.excludeAirMetric(feature);
             }
         }
-//        to be fixed!!!!
+
         List<String> allRecom = Arrays.asList("general_population", "elderly", "lung_diseases", "heart_diseases", "active", "pregnant_women","children");
-        List<String> recomList = Arrays.asList("general_population", "elderly", "lung_diseases", "heart_diseases", "active", "pregnant_women","children");
+        List<String> recomList = Arrays.asList(health_recommendations);
 
         for (String recom: allRecom) {
             if (!recomList.contains(recom)) {
                 airRequest.excludeAirMetric(recom);
+                System.out.println(recom);
             }
         }
 
@@ -108,11 +109,11 @@ public class AirServiceImpl implements AirService {
         airRepository.clear();
     }
 
-	@Override
-	public AirRequest getAirQualityByLocal(double lon, double lat, String[] features, String[] health_recommendations) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public AirRequest getAirQualityByLocal(double lon, double lat, String[] features) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 
 

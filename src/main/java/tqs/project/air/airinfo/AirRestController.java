@@ -14,8 +14,9 @@ public class AirRestController {
     private AirService airService;
 
     @GetMapping("/breeze")
-    public ResponseEntity<AirRequest> getAirRequest(@RequestParam double lon, @RequestParam double lat, @RequestParam String features){
-        return ResponseEntity.ok(airService.getAirQualityByLocal(lat, lon, features.split(",")));
+    public ResponseEntity<AirRequest> getAirRequest(@RequestParam double lon, @RequestParam double lat, @RequestParam String polutants, @RequestParam String health_recommendations){
+        System.out.println(polutants + "\n====" + health_recommendations);
+    	return ResponseEntity.ok(airService.getAirQualityByLocal(lat, lon, polutants.split(","), health_recommendations.split(",")));
     }
 
     @GetMapping("/cache")

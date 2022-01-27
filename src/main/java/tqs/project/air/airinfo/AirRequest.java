@@ -114,10 +114,11 @@ public class AirRequest {
         JsonNode recommendations = jsonNode.get("data").get("health_recommendations");      
 
         JsonNode general_population = recommendations.get("general_population");
+
         listOfRecommendations.put(
                 "general_population", new General_population("general_population", getRecommendation(general_population))
         );
-
+        
         JsonNode elderly = recommendations.get("elderly");
         listOfRecommendations.put(
                 "elderly", new Elderly("elderly", getRecommendation(elderly))

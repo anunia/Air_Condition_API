@@ -6,9 +6,9 @@ $(document).ready(function(){
         url += "lat="+$("#lat").val();
         url += "&lon="+$("#lon").val();
 
-        var features = "";
+        var polutants = "";
         $.each($("input[name='feature']:checked"), function(){
-            features+= $(this).val()+",";
+            polutants+= $(this).val()+",";
         });
         
         var health_recommendations = "";
@@ -16,7 +16,7 @@ $(document).ready(function(){
             health_recommendations+= $(this).val()+",";
         });
         
-        url += "&features=" + features.slice(0, -1);
+        url += "&polutants=" + polutants.slice(0, -1);
         url += "&health_recommendations=" + health_recommendations.slice(0, -1);
         
         console.log(url);
@@ -40,7 +40,7 @@ $(document).ready(function(){
                     "</div>" +
                     "<p id='baqi-category'>"+data.baqi.category+"<p>"
                 )
-                if (features != ""){
+                if (polutants != ""){
                     $("#pollutants").append("<div id='pollutants-list'></div>");
                     $.each( data.listOfPollutants, function( key, value ) {
                         console.log( key + ": " + value.name );
