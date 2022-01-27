@@ -44,14 +44,23 @@ public class AirServiceImplTest {
         features[0] = "co";
         features[1] = "so2";
 
-        AirRequest airResult = airServiceImpl.getAirQualityByLocal(0, 0, features);
+        String[] recommendations = new String[1];
+        recommendations[0] = "elderly";
+        
+        AirRequest airResult = airServiceImpl.getAirQualityByLocal(0, 0, features, recommendations);
 
         AirRequest airExpected = new AirRequest(data);
         airExpected.excludeAirMetric("no2");
         airExpected.excludeAirMetric("o3");
         airExpected.excludeAirMetric("pm10");
         airExpected.excludeAirMetric("pm25");
-
+        airExpected.excludeAirRecommendations("general_population");
+        airExpected.excludeAirRecommendations("lung_diseases");
+        airExpected.excludeAirRecommendations("heart_diseases");
+        airExpected.excludeAirRecommendations("active");
+        airExpected.excludeAirRecommendations("pregnant_women");
+        airExpected.excludeAirRecommendations("children");
+        
         assertEquals(airExpected, airResult);
         verify(airRepository, times(0)).putData(anyDouble(), anyDouble(), anyString());
         verify(airRepository, times(1)).getData(anyDouble(), anyDouble());
