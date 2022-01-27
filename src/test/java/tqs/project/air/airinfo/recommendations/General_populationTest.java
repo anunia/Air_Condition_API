@@ -16,7 +16,7 @@ class General_populationTest {
     @BeforeEach
     void setup(){
         active = new Active("active", "Good for running.");
-        heart_diseases = new Heart_diseases("children", "Stay home.");
+        heart_diseases = new Heart_diseases("heart_diseases", "Stay home.");
     }
     
 
