@@ -60,7 +60,8 @@ $(document).ready(function(){
                         )
                     });
                 }
-                if ( 1==1 || health_recommendations != ""){
+                if (health_recommendations != ""){
+                	console.log( data.listOfRecommendations );
                     $("#recommendations").append("<div id='health_recommendations-list'></div>");
                     $.each( data.listOfRecommendations, function( key, value ) {
                         console.log( key + ": " + value.name );
@@ -81,6 +82,7 @@ $(document).ready(function(){
         $("#baqi-results-graph").remove();
         $("#baqi-category").remove();
         $("#pollutants-list").remove();
+        $("#health_recommendations-list").remove();
         $("#get-result").css("display", "none");
         $("#ask-params").css("display", "block");
     });

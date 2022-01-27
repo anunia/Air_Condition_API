@@ -156,6 +156,7 @@ public class AirRequest {
                 "requestDate=" + requestDate +
                 ", baqi=" + baqi +
                 ", listOfPollutants=" + listOfPollutants +
+                ", listOfRecommendations=" + listOfRecommendations +
                 '}';
     }
 
@@ -169,6 +170,10 @@ public class AirRequest {
 
     public Map<String, Pollutants> getListOfPollutants() {
         return listOfPollutants;
+    }
+    
+    public Map<String, Recommendations> getListOfRecommendations() {
+        return listOfRecommendations;
     }
 
     @Override

@@ -2,7 +2,7 @@ package tqs.project.air.airinfo.recommendations;
 
 import java.util.Objects;
 
-public class Recommendations {
+public abstract class Recommendations {
     private String name;
     private String recommendation;
     
@@ -11,16 +11,6 @@ public class Recommendations {
         this.recommendation = recommendation;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Recommendations)) return false;
-        Recommendations recom = (Recommendations) o;
-        
-        return Objects.equals(name, recom.name) &&
-                Objects.equals(recommendation, recom.recommendation);
-    }
-    
     public String getName() {
         return name;
     }
@@ -29,6 +19,16 @@ public class Recommendations {
         return recommendation;
     }
     
+     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Recommendations)) return false;
+        Recommendations recom = (Recommendations) o;
+        
+        return Objects.equals(name, recom.name) &&
+                Objects.equals(recommendation, recom.recommendation);
+    }
+       
     @Override
     public int hashCode() {
         return Objects.hash(name, recommendation);

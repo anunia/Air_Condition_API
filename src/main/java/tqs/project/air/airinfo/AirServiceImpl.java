@@ -68,11 +68,11 @@ public class AirServiceImpl implements AirService {
         }
 
         List<String> allFeatures = Arrays.asList("co", "no2", "o3", "pm10", "pm25", "so2");
-        List<String> featuresList = Arrays.asList(features);
+        List<String> featuresList = Arrays.asList(polutants);
 
         for (String feature: allFeatures) {
             if (!featuresList.contains(feature)) {
-                airRequest.excludeAirMetric(feature);
+            	airRequest.excludeAirMetric(feature);
             }
         }
 
@@ -81,11 +81,10 @@ public class AirServiceImpl implements AirService {
 
         for (String recom: allRecom) {
             if (!recomList.contains(recom)) {
-                airRequest.excludeAirMetric(recom);
-                System.out.println(recom);
+                airRequest.excludeAirRecommendations(recom);
             }
         }
-
+        System.out.println(airRequest.toString());
         return airRequest;
     }
 
@@ -108,13 +107,6 @@ public class AirServiceImpl implements AirService {
     public void clearCache() {
         airRepository.clear();
     }
-
-//	@Override
-//	public AirRequest getAirQualityByLocal(double lon, double lat, String[] features) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 
 
 }
