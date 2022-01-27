@@ -1,13 +1,11 @@
 package tqs.project.air.airinfo.recommendations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import tqs.project.air.airinfo.qualitymetrics.BAQI;
-import tqs.project.air.airinfo.qualitymetrics.CO;
-import tqs.project.air.airinfo.qualitymetrics.SO2;
 
 class General_populationTest {
 
@@ -17,9 +15,10 @@ class General_populationTest {
 
     @BeforeEach
     void setup(){
-        active = new Recommendations("active", "Good for running.");
-        heart_diseases = new Recommendations("heart_diseases", "Stay home.");
+        active = new Active("active", "Good for running.");
+        heart_diseases = new Heart_diseases("children", "Stay home.");
     }
+    
 
     @Test
     void gettersTest() {
@@ -31,11 +30,11 @@ class General_populationTest {
     @Test
     void equalsTest() {
         assertFalse(active.equals(heart_diseases));
-        assertTrue(active.equals(new Recommendations("active", "Good for running.")));
+        assertTrue(active.equals(new Active("active", "Good for running.")));
     }
 
     @Test
     void hashCodeTest() {
-        assertEquals(active.hashCode(), new Recommendations("active", "Good for running.").hashCode());
+        assertEquals(active.hashCode(), new Active("active", "Good for running.").hashCode());
     }
 }
