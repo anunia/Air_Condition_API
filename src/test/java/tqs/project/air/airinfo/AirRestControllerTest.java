@@ -39,7 +39,8 @@ public class AirRestControllerTest {
         mockMvc.perform(get("/api/breeze")
                 .param("lon", "0.0")
                 .param("lat", "0.0")
-                .param("features", ".")
+                .param("polutants", ".")
+                .param("health_recommendations", ".")
                 .contentType(MediaType.APPLICATION_JSON)).
                 andExpect(status().isOk());
 
