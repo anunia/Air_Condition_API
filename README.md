@@ -17,4 +17,4 @@ Air Condition API is using data collected from breezometer API. It presents info
 
 ## How to use the project
 
-To check contiotion in choosen location input the Latitude and Longitude (ex. Latitude: ` 48.857456 ` Longitude: ` 2.354611 `) and select the atributes. Then click ` Check data ` button.
+To check condition in chosen location input the Latitude and Longitude (ex. Latitude: ` 48.857456 ` Longitude: ` 2.354611 `) and select the atributes. Then click ` Check data ` button.
