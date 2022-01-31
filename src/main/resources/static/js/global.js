@@ -33,19 +33,19 @@ $(document).ready(function(){
                 $("#baqi-results").append(
                     "<div class='big c100 p"+data.baqi.aqi +"' id='baqi-results-graph'>" +
                         "<span>"+data.baqi.aqi + "</span>" +
-                        "<div class=\"slice\">" +
+                        "<div height = 100px > <div class=\"slice\">" +
                             "<div class=\"bar\"style='border-color: "+data.baqi.color+"'></div>" +
                             "<div class=\"fill\" style='border-color: "+data.baqi.color+"'></div>" +
                         " </div>"+
-                    "</div>" +
+                    "</div> </div>" +
                     "<p id='baqi-category'>"+data.baqi.category+"<p>"
                 )
                 if (polutants != ""){
-                    $("#pollutants").append("<div id='pollutants-list'></div>");
+                    $("#pollutants").append("<div height = 100px ><div id='pollutants-list'></div></div>");
                     $.each( data.listOfPollutants, function( key, value ) {
                         console.log( key + ": " + value.name );
                         $("#pollutants-list").append(
-                            "<div class='col-2'>" +
+                            "<div height = 400px class='col-2'>" +
                                 "<h5>" + value.name + "</h5>"+
                                 "<div class='c100 p"+value.baqi.aqi +"'>" +
                                     "<span>"+value.baqi.aqi + "</span>" +
@@ -62,7 +62,7 @@ $(document).ready(function(){
                 }
                 if (health_recommendations != ""){
                 	console.log( data.listOfRecommendations );
-                    $("#recommendations").append("<div id='health_recommendations-list'></div>");
+                    $("#recommendations").append("<div height = 100px ><div id='health_recommendations-list'></div></div>");
                     $.each( data.listOfRecommendations, function( key, value ) {
                         console.log( key + ": " + value.name );
                         $("#health_recommendations-list").append(
