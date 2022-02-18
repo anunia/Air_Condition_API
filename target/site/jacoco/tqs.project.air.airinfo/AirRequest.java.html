@@ -66,9 +66,9 @@ public class AirRequest {
 <span class="fc" id="L66">        JsonNode jsonNode = null;</span>
         try {
 <span class="fc" id="L68">            jsonNode = objectMapper.readTree(data);</span>
-<span class="nc" id="L69">        } catch (JsonProcessingException e) {</span>
+<span class="pc" id="L69">        } catch (JsonProcessingException e) {</span>
 <span class="nc" id="L70">            return ;</span>
-<span class="fc" id="L71">        }</span>
+        }
 <span class="fc" id="L72">        JsonNode baqiNode = jsonNode.get(&quot;data&quot;).get(&quot;indexes&quot;).get(&quot;baqi&quot;);</span>
 <span class="fc" id="L73">        this.baqi = new BAQI(baqiNode.get(&quot;aqi&quot;).asInt(), baqiNode.get(&quot;color&quot;).asText(), baqiNode.get(&quot;category&quot;).asText());</span>
 
@@ -153,11 +153,11 @@ public class AirRequest {
     @Override
     public String toString() {
 <span class="fc" id="L155">        return &quot;AirRequest{&quot; +</span>
-                &quot;requestDate=&quot; + requestDate +
-                &quot;, baqi=&quot; + baqi +
-                &quot;, listOfPollutants=&quot; + listOfPollutants +
-                &quot;, listOfRecommendations=&quot; + listOfRecommendations +
-                '}';
+<span class="fc" id="L156">                &quot;requestDate=&quot; + requestDate +</span>
+<span class="fc" id="L157">                &quot;, baqi=&quot; + baqi +</span>
+<span class="fc" id="L158">                &quot;, listOfPollutants=&quot; + listOfPollutants +</span>
+<span class="fc" id="L159">                &quot;, listOfRecommendations=&quot; + listOfRecommendations +</span>
+<span class="fc" id="L160">                '}';</span>
     }
 
     public long getRequestDate(){
@@ -179,15 +179,15 @@ public class AirRequest {
     @Override
     public boolean equals(Object o) {
 <span class="fc bfc" id="L181" title="All 2 branches covered.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (!(o instanceof AirRequest)) return false;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (!(o instanceof AirRequest)) return false;</span>
 <span class="fc" id="L183">        AirRequest that = (AirRequest) o;</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        return  Objects.equals(baqi, that.baqi) &amp;&amp;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        return  Objects.equals(baqi, that.baqi) &amp;&amp;</span>
 <span class="pc bpc" id="L185" title="1 of 2 branches missed.">                Objects.equals(listOfPollutants, that.listOfPollutants);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L190">        return Objects.hash(requestDate, baqi, listOfPollutants, objectMapper);</span>
+<span class="fc" id="L190">        return Objects.hash(requestDate, baqi, listOfPollutants, objectMapper);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
