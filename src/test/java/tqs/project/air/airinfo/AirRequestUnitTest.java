@@ -68,6 +68,8 @@ public class AirRequestUnitTest {
     
     @Test
     void hashCodeTest() {
-        assertEquals(airRequest.hashCode(), new AirRequest(data).hashCode());
+        assertEquals(airRequest.hashCode(), airRequest.hashCode());
+        assertNotSame(airRequest.hashCode(), new AirRequest(data).hashCode());
+
     }
 }
