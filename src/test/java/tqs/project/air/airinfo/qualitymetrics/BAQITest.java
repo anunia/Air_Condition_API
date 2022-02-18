@@ -25,8 +25,8 @@ public class BAQITest {
     void assertEqualsBQUITest() {
         assertFalse(baqi.equals("BAQI string"));
         assertFalse(baqi.equals(new BAQI(0, "b", "b")));
-        assertFalse(baqi.equals(new BAQI(0, "b", "c")));
-        assertFalse(baqi.equals(new BAQI(20, "b", "c")));
+        assertFalse(baqi.equals(new BAQI(0, "a", "c")));
+        assertFalse(baqi.equals(new BAQI(20, "a", "b")));
     } 
     
     @Test
