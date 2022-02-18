@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AirServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">air</a> &gt; <a href="index.source.html" class="el_package">tqs.project.air.airinfo</a> &gt; <span class="el_source">AirServiceImpl.java</span></div><h1>AirServiceImpl.java</h1><pre class="source lang-java linenums">package tqs.project.air.airinfo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+<span class="fc" id="L16">public class AirServiceImpl implements AirService {</span>
+
+    @Value(&quot;${breezometer.api}&quot;)
+    private String url;
+
+    @Value(&quot;${breezometer.key}&quot;)
+    private String key;
+
+    @Value(&quot;${breezometer.features}&quot;)
+    private String features;
+
+    @Autowired
+    private AirRepository airRepository;
+
+<span class="fc" id="L30">    private final HttpClient httpClient = HttpClient.newBuilder()</span>
+<span class="fc" id="L31">            .version(HttpClient.Version.HTTP_2)</span>
+<span class="fc" id="L32">            .build();</span>
+
+    protected String sendGET(String lat, String lon) throws IOException, InterruptedException {
+<span class="nc" id="L35">        HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="nc" id="L36">                .GET()</span>
+<span class="nc" id="L37">                .uri(URI.create(</span>
+                        this.url+
+                        &quot;lat=&quot;+lat +
+                        &quot;&amp;lon=&quot;+lon +
+                        &quot;&amp;key=&quot;+this.key+
+                        &quot;&amp;features=&quot; + this.features))
+<span class="nc" id="L43">                .setHeader(&quot;User-Agent&quot;, &quot;Java 11 HttpClient Bot&quot;)</span>
+<span class="nc" id="L44">                .build();</span>
+<span class="nc" id="L45">        System.out.println(this.url+</span>
+                        &quot;lat=&quot;+lat +
+                        &quot;&amp;lon=&quot;+lon +
+                        &quot;&amp;key=&quot;+this.key+
+                        &quot;&amp;features=&quot; + this.features);
+        
+<span class="nc" id="L51">        HttpResponse&lt;String&gt; response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());</span>
+
+<span class="nc" id="L53">        return response.body();</span>
+    }
+
+    @Override
+    public AirRequest getAirQualityByLocal(double lat, double lon, String[] polutants, String[] health_recommendations) {
+<span class="fc" id="L58">        AirRequest airRequest = this.airRepository.getData(lat, lon);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (airRequest == null){</span>
+            try {
+<span class="nc" id="L61">                String getResult = sendGET(&quot;&quot; + lat, &quot;&quot; + lon);</span>
+//               airRequest = new AirRequest(getResult);
+
+<span class="nc" id="L64">                airRequest = this.airRepository.putData(lat, lon, getResult);</span>
+<span class="nc" id="L65">            } catch (Exception e){</span>
+<span class="nc" id="L66">                return null;</span>
+<span class="nc" id="L67">            }</span>
+        }
+
+<span class="fc" id="L70">        List&lt;String&gt; allFeatures = Arrays.asList(&quot;co&quot;, &quot;no2&quot;, &quot;o3&quot;, &quot;pm10&quot;, &quot;pm25&quot;, &quot;so2&quot;);</span>
+<span class="fc" id="L71">        List&lt;String&gt; featuresList = Arrays.asList(polutants);</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        for (String feature: allFeatures) {</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            if (!featuresList.contains(feature)) {</span>
+<span class="fc" id="L75">            	airRequest.excludeAirMetric(feature);</span>
+            }
+<span class="fc" id="L77">        }</span>
+
+<span class="fc" id="L79">        List&lt;String&gt; allRecom = Arrays.asList(&quot;general_population&quot;, &quot;elderly&quot;, &quot;lung_diseases&quot;, &quot;heart_diseases&quot;, &quot;active&quot;, &quot;pregnant_women&quot;,&quot;children&quot;);</span>
+<span class="fc" id="L80">        List&lt;String&gt; recomList = Arrays.asList(health_recommendations);</span>
+
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (String recom: allRecom) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (!recomList.contains(recom)) {</span>
+<span class="fc" id="L84">                airRequest.excludeAirRecommendations(recom);</span>
+            }
+<span class="fc" id="L86">        }</span>
+<span class="fc" id="L87">        System.out.println(airRequest.toString());</span>
+<span class="fc" id="L88">        return airRequest;</span>
+    }
+
+    @Override
+    public int getMisses() {
+<span class="nc" id="L93">        return airRepository.getMiss();</span>
+    }
+
+    @Override
+    public int getHits() {
+<span class="nc" id="L98">        return airRepository.getHit();</span>
+    }
+
+    @Override
+    public int getRequests() {
+<span class="nc" id="L103">        return airRepository.getHit() + airRepository.getMiss();</span>
+    }
+
+    @Override
+    public void clearCache() {
+<span class="nc" id="L108">        airRepository.clear();</span>
+<span class="nc" id="L109">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

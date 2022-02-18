@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AirRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">air</a> &gt; <a href="index.source.html" class="el_package">tqs.project.air.airinfo</a> &gt; <span class="el_source">AirRequest.java</span></div><h1>AirRequest.java</h1><pre class="source lang-java linenums">package tqs.project.air.airinfo;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import tqs.project.air.airinfo.qualitymetrics.*;
+import tqs.project.air.airinfo.recommendations.Active;
+import tqs.project.air.airinfo.recommendations.Children;
+import tqs.project.air.airinfo.recommendations.Elderly;
+import tqs.project.air.airinfo.recommendations.General_population;
+import tqs.project.air.airinfo.recommendations.Heart_diseases;
+import tqs.project.air.airinfo.recommendations.Lung_diseases;
+import tqs.project.air.airinfo.recommendations.Pregnant_women;
+import tqs.project.air.airinfo.recommendations.Recommendations;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+public class AirRequest {
+    private long requestDate;
+    private BAQI baqi;
+    private Map&lt;String, Pollutants&gt; listOfPollutants;
+    private Map&lt;String, Recommendations&gt; listOfRecommendations;
+    private ObjectMapper objectMapper;
+
+
+<span class="fc" id="L28">    public AirRequest(String data) {</span>
+<span class="fc" id="L29">        this.requestDate = System.currentTimeMillis();</span>
+<span class="fc" id="L30">        objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L31">        listOfPollutants = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L32">        listOfRecommendations = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L34">        this.parseData(data);</span>
+<span class="fc" id="L35">    }</span>
+
+    public BAQI getBaqi() {
+<span class="fc" id="L38">        return baqi;</span>
+    }
+
+<span class="fc" id="L41">    public Pollutants getAirMetric(String metric) {return listOfPollutants.get(metric);}</span>
+
+<span class="fc" id="L43">    public Pollutants excludeAirMetric(String metric) {return listOfPollutants.remove(metric);}</span>
+
+<span class="nc" id="L45">    public Recommendations getAirRecommendations(String recom) {return listOfRecommendations.get(recom);}</span>
+
+<span class="fc" id="L47">    public Recommendations excludeAirRecommendations(String recom) {return listOfRecommendations.remove(recom);}</span>
+
+    
+    private BAQI getPollutantBAQI(JsonNode jn){
+<span class="fc" id="L51">        JsonNode jsonNode = jn.get(&quot;aqi_information&quot;).get(&quot;baqi&quot;);</span>
+
+<span class="fc" id="L53">        return new BAQI(jsonNode.get(&quot;aqi&quot;).asInt(), jsonNode.get(&quot;color&quot;).asText(), jsonNode.get(&quot;category&quot;).asText());</span>
+    }
+
+    private double getPollutantConcentration(JsonNode jn){
+<span class="fc" id="L57">        return jn.get(&quot;concentration&quot;).get(&quot;value&quot;).asDouble();</span>
+    }
+    
+    private String getRecommendation(JsonNode jn){
+<span class="fc" id="L61">        return jn.toString();</span>
+    }
+
+    
+    protected void parseData(String data){
+<span class="fc" id="L66">        JsonNode jsonNode = null;</span>
+        try {
+<span class="fc" id="L68">            jsonNode = objectMapper.readTree(data);</span>
+<span class="nc" id="L69">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L70">            return ;</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">        JsonNode baqiNode = jsonNode.get(&quot;data&quot;).get(&quot;indexes&quot;).get(&quot;baqi&quot;);</span>
+<span class="fc" id="L73">        this.baqi = new BAQI(baqiNode.get(&quot;aqi&quot;).asInt(), baqiNode.get(&quot;color&quot;).asText(), baqiNode.get(&quot;category&quot;).asText());</span>
+
+<span class="fc" id="L75">        JsonNode pollutants = jsonNode.get(&quot;data&quot;).get(&quot;pollutants&quot;);</span>
+
+<span class="fc" id="L77">        JsonNode co = pollutants.get(&quot;co&quot;);</span>
+<span class="fc" id="L78">        BAQI coBAQI = getPollutantBAQI(co);</span>
+<span class="fc" id="L79">        listOfPollutants.put(</span>
+<span class="fc" id="L80">                &quot;co&quot;, new CO(coBAQI, getPollutantConcentration(co))</span>
+        );
+
+<span class="fc" id="L83">        JsonNode no2 = pollutants.get(&quot;no2&quot;);</span>
+<span class="fc" id="L84">        BAQI no2BAQI = getPollutantBAQI(no2);</span>
+<span class="fc" id="L85">        listOfPollutants.put(</span>
+<span class="fc" id="L86">                &quot;no2&quot;, new NO2(no2BAQI, getPollutantConcentration(no2))</span>
+        );
+
+<span class="fc" id="L89">        JsonNode o3 = pollutants.get(&quot;o3&quot;);</span>
+<span class="fc" id="L90">        BAQI o3BAQI = getPollutantBAQI(o3);</span>
+<span class="fc" id="L91">        listOfPollutants.put(</span>
+<span class="fc" id="L92">                &quot;o3&quot;, new O3(o3BAQI, getPollutantConcentration(o3))</span>
+        );
+
+<span class="fc" id="L95">        JsonNode pm10 = pollutants.get(&quot;pm10&quot;);</span>
+<span class="fc" id="L96">        BAQI pm10BAQI = getPollutantBAQI(pm10);</span>
+<span class="fc" id="L97">        listOfPollutants.put(</span>
+<span class="fc" id="L98">                &quot;pm10&quot;, new PM10(pm10BAQI, getPollutantConcentration(pm10))</span>
+        );
+
+<span class="fc" id="L101">        JsonNode pm25 = pollutants.get(&quot;pm25&quot;);</span>
+<span class="fc" id="L102">        BAQI pm25BAQI = getPollutantBAQI(pm25);</span>
+<span class="fc" id="L103">        listOfPollutants.put(</span>
+<span class="fc" id="L104">                &quot;pm25&quot;, new PM25(pm25BAQI, getPollutantConcentration(pm25))</span>
+        );
+
+<span class="fc" id="L107">        JsonNode so2 = pollutants.get(&quot;so2&quot;);</span>
+<span class="fc" id="L108">        BAQI so2BAQI= getPollutantBAQI(so2);</span>
+<span class="fc" id="L109">        listOfPollutants.put(</span>
+<span class="fc" id="L110">                &quot;so2&quot;, new SO2(so2BAQI, getPollutantConcentration(so2))</span>
+        );
+        
+        
+<span class="fc" id="L114">        JsonNode recommendations = jsonNode.get(&quot;data&quot;).get(&quot;health_recommendations&quot;);      </span>
+
+<span class="fc" id="L116">        JsonNode general_population = recommendations.get(&quot;general_population&quot;);</span>
+
+<span class="fc" id="L118">        listOfRecommendations.put(</span>
+<span class="fc" id="L119">                &quot;general_population&quot;, new General_population(&quot;general_population&quot;, getRecommendation(general_population))</span>
+        );
+        
+<span class="fc" id="L122">        JsonNode elderly = recommendations.get(&quot;elderly&quot;);</span>
+<span class="fc" id="L123">        listOfRecommendations.put(</span>
+<span class="fc" id="L124">                &quot;elderly&quot;, new Elderly(&quot;elderly&quot;, getRecommendation(elderly))</span>
+        );
+
+<span class="fc" id="L127">        JsonNode lung_diseases = recommendations.get(&quot;lung_diseases&quot;);</span>
+<span class="fc" id="L128">        listOfRecommendations.put(</span>
+<span class="fc" id="L129">                &quot;lung_diseases&quot;, new Lung_diseases(&quot;lung_diseases&quot;, getRecommendation(lung_diseases))</span>
+        );
+
+<span class="fc" id="L132">        JsonNode heart_diseases = recommendations.get(&quot;heart_diseases&quot;);</span>
+<span class="fc" id="L133">        listOfRecommendations.put(</span>
+<span class="fc" id="L134">                &quot;heart_diseases&quot;, new Heart_diseases(&quot;heart_diseases&quot;, getRecommendation(heart_diseases))</span>
+        );
+
+<span class="fc" id="L137">        JsonNode active = recommendations.get(&quot;active&quot;);</span>
+<span class="fc" id="L138">        listOfRecommendations.put(</span>
+<span class="fc" id="L139">                &quot;active&quot;, new Active(&quot;active&quot;, getRecommendation(active))</span>
+        );
+
+<span class="fc" id="L142">        JsonNode pregnant_women = recommendations.get(&quot;pregnant_women&quot;);</span>
+<span class="fc" id="L143">        listOfRecommendations.put(</span>
+<span class="fc" id="L144">                &quot;pregnant_women&quot;, new Pregnant_women(&quot;pregnant_women&quot;, getRecommendation(pregnant_women))</span>
+        );
+<span class="fc" id="L146">        JsonNode children = recommendations.get(&quot;children&quot;);</span>
+<span class="fc" id="L147">        listOfRecommendations.put(</span>
+<span class="fc" id="L148">                &quot;children&quot;, new Children(&quot;children&quot;, getRecommendation(children))</span>
+        );
+
+<span class="fc" id="L151">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L155">        return &quot;AirRequest{&quot; +</span>
+                &quot;requestDate=&quot; + requestDate +
+                &quot;, baqi=&quot; + baqi +
+                &quot;, listOfPollutants=&quot; + listOfPollutants +
+                &quot;, listOfRecommendations=&quot; + listOfRecommendations +
+                '}';
+    }
+
+    public long getRequestDate(){
+<span class="fc" id="L164">        return this.requestDate;</span>
+    }
+
+    public void setRequestDate(long requestDate){
+<span class="fc" id="L168">        this.requestDate = requestDate;</span>
+<span class="fc" id="L169">    }</span>
+
+    public Map&lt;String, Pollutants&gt; getListOfPollutants() {
+<span class="fc" id="L172">        return listOfPollutants;</span>
+    }
+    
+    public Map&lt;String, Recommendations&gt; getListOfRecommendations() {
+<span class="fc" id="L176">        return listOfRecommendations;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (!(o instanceof AirRequest)) return false;</span>
+<span class="fc" id="L183">        AirRequest that = (AirRequest) o;</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        return  Objects.equals(baqi, that.baqi) &amp;&amp;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">                Objects.equals(listOfPollutants, that.listOfPollutants);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L190">        return Objects.hash(requestDate, baqi, listOfPollutants, objectMapper);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

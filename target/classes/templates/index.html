@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Air Quality REST API</title>
+
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link rel="stylesheet" href="css/circle.css">
+
+    <!-- Main CSS-->
+    <link href="css/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Check your Air</h2>
+                </div>
+                <div class="card-body" id="ask-params">
+                    <div class="form-row m-b-55">
+                        <div class="name">Coordinates</div>
+                        <div class="value">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group-desc">
+                                        <input class="input--style-5" type="text" id="lat" name="lat">
+                                        <label class="label--desc">Latitude</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group-desc">
+                                        <input class="input--style-5" type="text" id="lon" name="lon">
+                                        <label class="label--desc">Longitude</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    	<label class="label">Which pollutant(s) do you want to see?</label>
+                    
+                    <div class="form-row p-t-20">
+                        <div class="p-t-15">
+                            <label class="checkbox-container m-r-15">CO
+                                <input type="checkbox" value="co" checked="checked" name="feature">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">NO2
+                                <input type="checkbox" value="no2" name="feature">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">O3
+                                <input type="checkbox" value="o3" name="feature">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">PM10
+                                <input type="checkbox" value="pm10" name="feature">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">PM25
+                                <input type="checkbox" value="pm25" name="feature">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container">SO
+                                <input type="checkbox" value="so" name="feature">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                        </div>
+                    </div>
+                     <div class="form-row p-t-20">
+                        <div class="p-t-15">
+                            <label class="checkbox-container m-r-15">General Population
+                                <input type="checkbox" value="general_population" checked="checked" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">Elderly
+                                <input type="checkbox" value="elderly" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">Lung Diseases
+                                <input type="checkbox" value="lung_diseases" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">Heart Diseases
+                                <input type="checkbox" value="heart_diseases" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container m-r-15">Active
+                                <input type="checkbox" value="active" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container">Pregnant Women
+                                <input type="checkbox" value="pregnant_women" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                            <label class="checkbox-container">Children
+                                <input type="checkbox" value="children" name="recommendations">
+                                <!-- <span class="checkmark"></span> -->
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" id="data-button">Check Data</button>
+                        <button class="btn btn--radius-2 btn--red" id="cache-button">Check Cache</button>
+                    </div>
+                </div>
+                <div class="card-body m-b-55" id="get-result" style="display:none">
+                    <h4 class="modal-title" id="get-header">Results for </h4>
+                    <div class="result-body">
+                        <p>BAQI</p>
+                        <div id="baqi-results" class='m-r-15'></div>
+                        <div id="pollutants" class='m-r-15'></div>
+                        <div id="recommendations" class='m-r-15'></div>
+                        
+                    </div>
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" id="back-button">Want To Check Something Else</button>
+                    </div>
+                </div>
+
+                <div class="card-body" id="get-cache" style="display:none">
+                    <h2 class="modal-title" id="get-cache-header">Cache Statistics</h2>
+                    <div class="result-body" id="cache-results">
+                    </div>
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" id="clear-cache-button">Clear Cache</button>
+                        <button class="btn btn--radius-2 btn--red" id="back-cache-button">Want To Check Something Else</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JS-->
+    <script src="js/global.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->

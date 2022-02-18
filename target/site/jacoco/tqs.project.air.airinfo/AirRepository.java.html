@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AirRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">air</a> &gt; <a href="index.source.html" class="el_package">tqs.project.air.airinfo</a> &gt; <span class="el_source">AirRepository.java</span></div><h1>AirRepository.java</h1><pre class="source lang-java linenums">package tqs.project.air.airinfo;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+
+@Repository
+public class AirRepository {
+    protected HashMap&lt;AirCoord, AirRequest&gt; cache;
+    private int ttl;
+    private int miss;
+    private int hit;
+
+<span class="fc" id="L14">    public AirRepository(int ttl){</span>
+<span class="fc" id="L15">        this.ttl = ttl;</span>
+<span class="fc" id="L16">        this.cache = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L17">        this.miss = 0;</span>
+<span class="fc" id="L18">        this.hit = 0;</span>
+<span class="fc" id="L19">    }</span>
+
+    public AirRepository() {
+<span class="fc" id="L22">        this(60000);</span>
+<span class="fc" id="L23">    }</span>
+
+    public AirRequest getData(double lat, double lon){
+<span class="nc" id="L26">        AirCoord air = new AirCoord(lat, lon);</span>
+
+<span class="nc bnc" id="L28" title="All 4 branches missed.">        if (cache.containsKey(air) &amp;&amp; System.currentTimeMillis() &lt; cache.get(air).getRequestDate() + this.ttl){</span>
+<span class="nc" id="L29">            this.hit++;</span>
+<span class="nc" id="L30">            return cache.get(air);</span>
+        }
+<span class="nc" id="L32">        return null;</span>
+    }
+
+    public int getMiss() {
+<span class="nc" id="L36">        return miss;</span>
+    }
+
+    public int getHit() {
+<span class="nc" id="L40">        return hit;</span>
+    }
+
+    public void clear(){
+<span class="nc" id="L44">        this.cache.clear();</span>
+<span class="nc" id="L45">        this.miss = 0;</span>
+<span class="nc" id="L46">        this.hit = 0;</span>
+<span class="nc" id="L47">    }</span>
+
+    public AirRequest putData(double lat, double lon, String data){
+<span class="nc" id="L50">        this.miss++;</span>
+<span class="nc" id="L51">        AirRequest airRequest = new AirRequest(data);</span>
+<span class="nc" id="L52">        this.cache.put(new AirCoord(lat, lon), airRequest);</span>
+<span class="nc" id="L53">        return airRequest;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
