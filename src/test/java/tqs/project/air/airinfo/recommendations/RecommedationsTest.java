@@ -36,6 +36,7 @@ class RecommedationsTest {
     @Test
     void equalsTestWrongData() {
         assertFalse(active.equals(heart_diseases));
+        assertFalse(active.equals("Active"));
         assertFalse(active.equals(new Active("active", "Not good for running.")));
     }
 
