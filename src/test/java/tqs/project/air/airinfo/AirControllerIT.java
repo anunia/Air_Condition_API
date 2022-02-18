@@ -75,18 +75,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 	@Test 
 	public void whenSearchingAndClearingCache_MissesReset() throws Exception { 
 		mockMvc.perform(get("/api/breeze") .param("lat", ""+lat)
-		.param("lon", ""+lon) .param("features", "co,so2,o3,pm10"));
+				.param("lon", ""+lon) .param("features", "co,so2,o3,pm10"));
 		
-		assertEquals(1, airService.getMisses()); assertEquals(0,
-		airService.getHits());
+		assertEquals(1, airService.getMisses()); 
+		assertEquals(0,	airService.getHits());
 		
 		mockMvc.perform(get("/api/clear")).andExpect(status().isOk());
 		
-		mockMvc.perform(get("/api/breeze") .param("lat", ""+lat) .param("lon",
-		""+lon) .param("features", "co,so2,o3,pm10"));
+		mockMvc.perform(get("/api/breeze") 
+				.param("lat", ""+lat) .param("lon",""+lon) .param("features", "co,so2,o3,pm10"));
 		
-		assertEquals(1, airService.getMisses()); assertEquals(0,
-		airService.getHits()); 
+		assertEquals(1, airService.getMisses()); 
+		assertEquals(0, airService.getHits()); 
 	}
 	
 	@Test // 
