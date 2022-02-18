@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: tqs.project.air.airinfo.recommendations.RecommedationsTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in tqs.project.air.airinfo.recommendations.RecommedationsTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in tqs.project.air.airinfo.recommendations.RecommedationsTest
