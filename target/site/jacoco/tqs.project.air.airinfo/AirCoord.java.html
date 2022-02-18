@@ -22,7 +22,7 @@ public class AirCoord {
     @Override
     public boolean equals(Object o) {
 <span class="fc bfc" id="L24" title="All 2 branches covered.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (!(o instanceof AirCoord)) return false;</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (!(o instanceof AirCoord)) return false;</span>
 <span class="fc" id="L26">        AirCoord airCoord = (AirCoord) o;</span>
 <span class="fc bfc" id="L27" title="All 2 branches covered.">        return Double.compare(airCoord.lon, lon) == 0 &amp;&amp;</span>
 <span class="fc bfc" id="L28" title="All 2 branches covered.">                Double.compare(airCoord.lat, lat) == 0;</span>
