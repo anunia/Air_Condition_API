@@ -9,7 +9,7 @@ air,tqs.project.air.airinfo.qualitymetrics,PM25,0,8,0,0,0,2,0,1,0,1
 air,tqs.project.air.airinfo.qualitymetrics,SO2,0,8,0,0,0,2,0,1,0,1
 air,tqs.project.air.airinfo.qualitymetrics,NO2,0,8,0,0,0,2,0,1,0,1
 air,tqs.project.air.airinfo.qualitymetrics,CO,0,8,0,0,0,2,0,1,0,1
-air,tqs.project.air.airinfo.qualitymetrics,BAQI,3,80,4,6,0,16,4,8,0,7
+air,tqs.project.air.airinfo.qualitymetrics,BAQI,0,83,2,8,0,16,2,10,0,7
 air,tqs.project.air.airinfo.qualitymetrics,Pollutants,4,84,4,6,0,19,4,9,0,8
 air,tqs.project.air.airinfo.qualitymetrics,PM10,0,8,0,0,0,2,0,1,0,1
 air,tqs.project.air.airinfo.recommendations,Recommendations,0,58,0,8,0,12,0,9,0,5

@@ -20,7 +20,13 @@ public class BAQITest {
         assertEquals(baqi, new BAQI(0, "a", "b"));
 
     }
-
+    
+    @Test
+    void assertEqualsBQUITest() {
+        assertFalse(baqi.equals("BAQI string"));
+        assertFalse(baqi.equals(new BAQI(0, "b", "b")));
+    } 
+    
     @Test
     void hashCodeTest() {
         HashMap<BAQI, Integer> test = new HashMap<>();
