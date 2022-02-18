@@ -28,9 +28,15 @@ class RecommedationsTest {
     }
 
     @Test
-    void equalsTest() {
-        assertFalse(active.equals(heart_diseases));
+    void equalsTestCorrectData() {
+        assertTrue(active.equals(active));
         assertTrue(active.equals(new Active("active", "Good for running.")));
+    }
+    
+    @Test
+    void equalsTestWrongData() {
+        assertFalse(active.equals(heart_diseases));
+        assertFalse(active.equals(new Active("active", "Not good for running.")));
     }
 
     @Test
