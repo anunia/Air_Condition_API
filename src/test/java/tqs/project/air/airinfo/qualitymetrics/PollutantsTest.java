@@ -30,6 +30,9 @@ class PollutantsTest {
     void equalsTest() {
         assertFalse(so2.equals(co));
         assertTrue(co.equals(new CO(baqi, 22.2)));
+        assertTrue(co.equals(co));
+        assertFalse(co.equals("CO"));
+
     }
 
     @Test
