@@ -23,21 +23,21 @@ public class AirRepository {
 <span class="fc" id="L23">    }</span>
 
     public AirRequest getData(double lat, double lon){
-<span class="nc" id="L26">        AirCoord air = new AirCoord(lat, lon);</span>
+<span class="fc" id="L26">        AirCoord air = new AirCoord(lat, lon);</span>
 
-<span class="nc bnc" id="L28" title="All 4 branches missed.">        if (cache.containsKey(air) &amp;&amp; System.currentTimeMillis() &lt; cache.get(air).getRequestDate() + this.ttl){</span>
-<span class="nc" id="L29">            this.hit++;</span>
-<span class="nc" id="L30">            return cache.get(air);</span>
+<span class="fc bfc" id="L28" title="All 4 branches covered.">        if (cache.containsKey(air) &amp;&amp; System.currentTimeMillis() &lt; cache.get(air).getRequestDate() + this.ttl){</span>
+<span class="fc" id="L29">            this.hit++;</span>
+<span class="fc" id="L30">            return cache.get(air);</span>
         }
-<span class="nc" id="L32">        return null;</span>
+<span class="fc" id="L32">        return null;</span>
     }
 
     public int getMiss() {
-<span class="nc" id="L36">        return miss;</span>
+<span class="fc" id="L36">        return miss;</span>
     }
 
     public int getHit() {
-<span class="nc" id="L40">        return hit;</span>
+<span class="fc" id="L40">        return hit;</span>
     }
 
     public void clear(){
@@ -47,10 +47,10 @@ public class AirRepository {
 <span class="nc" id="L47">    }</span>
 
     public AirRequest putData(double lat, double lon, String data){
-<span class="nc" id="L50">        this.miss++;</span>
-<span class="nc" id="L51">        AirRequest airRequest = new AirRequest(data);</span>
-<span class="nc" id="L52">        this.cache.put(new AirCoord(lat, lon), airRequest);</span>
-<span class="nc" id="L53">        return airRequest;</span>
+<span class="fc" id="L50">        this.miss++;</span>
+<span class="fc" id="L51">        AirRequest airRequest = new AirRequest(data);</span>
+<span class="fc" id="L52">        this.cache.put(new AirCoord(lat, lon), airRequest);</span>
+<span class="fc" id="L53">        return airRequest;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

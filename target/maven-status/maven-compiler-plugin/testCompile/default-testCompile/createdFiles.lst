@@ -3,6 +3,7 @@ tqs\project\air\airinfo\AirCoordTest.class
 tqs\project\air\airinfo\AirServiceImplTest.class
 tqs\project\air\AirApplicationTests.class
 tqs\project\air\airinfo\AirRestControllerTest.class
+tqs\project\air\airinfo\AirRepositoryUnitTest.class
 tqs\project\air\airinfo\qualitymetrics\PollutantsTest.class
 tqs\project\air\airinfo\qualitymetrics\BAQITest.class
 tqs\project\air\airinfo\recommendations\RecommedationsTest.class
