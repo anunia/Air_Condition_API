@@ -27,6 +27,10 @@ public class AirCoordTest {
     public void equalsTest(){
         assertNotEquals("test", airCoord);
         assertEquals(new AirCoord(0, 0), airCoord);
+        
+        assertTrue(airCoord.equals(airCoord));
+        assertFalse(airCoord.equals(new AirCoord(2, 0)));
+        assertFalse(airCoord.equals(new AirCoord(0, 2)));
     }
 
     @Test void hashTest(){
