@@ -36,7 +36,10 @@ public class AirRepositoryUnitTest {
         TimeUnit.MILLISECONDS.sleep(600);
 
         assertNull(this.airRepository.getData(0, 0));
-
+        
+        this.airRepository.clear();
+        assertEquals(0, this.airRepository.getMiss());
+        assertEquals(0, this.airRepository.getHit());
     }
 
 }
