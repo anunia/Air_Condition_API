@@ -21,4 +21,6 @@ To check condition in chosen location input the Latitude and Longitude (ex. Lati
 
 ## Code coverage
 
+[![codecov](https://codecov.io/gh/anunia/Air_Condition_API/branch/main/graph/badge.svg?token=0H2RZ9M88I)](https://codecov.io/gh/anunia/Air_Condition_API)
+
 ![codecov.io](https://codecov.io/gh/anunia/Air_Condition_API/branch/main/graphs/sunburst.svg)
