@@ -39,8 +39,8 @@ public abstract class Pollutants {
 
     @Override
     public boolean equals(Object o) {
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (!(o instanceof Pollutants)) return false;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (!(o instanceof Pollutants)) return false;</span>
 <span class="fc" id="L44">        Pollutants that = (Pollutants) o;</span>
 <span class="pc bpc" id="L45" title="1 of 2 branches missed.">        return Double.compare(that.concentration, concentration) == 0 &amp;&amp;</span>
 <span class="pc bpc" id="L46" title="1 of 2 branches missed.">                baqi.equals(that.baqi) &amp;&amp;</span>
