@@ -66,5 +66,15 @@ public class AirServiceImplTest {
         verify(airRepository, times(1)).getData(anyDouble(), anyDouble());
 
     }
+    
+    @Test
+    public void repositoryCacheTest() {
+    	airServiceImpl.clearCache();
+    	
+    	assertEquals(0,airServiceImpl.getHits());
+    	assertEquals(0,airServiceImpl.getMisses()); 
+    	assertEquals(0,airServiceImpl.getRequests()); 
+    	  	
+    }
 
 }
