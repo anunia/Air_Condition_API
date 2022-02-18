@@ -35,78 +35,73 @@ import java.util.List;
 <span class="nc" id="L35">        HttpRequest request = HttpRequest.newBuilder()</span>
 <span class="nc" id="L36">                .GET()</span>
 <span class="nc" id="L37">                .uri(URI.create(</span>
-                        this.url+
-                        &quot;lat=&quot;+lat +
-                        &quot;&amp;lon=&quot;+lon +
-                        &quot;&amp;key=&quot;+this.key+
-                        &quot;&amp;features=&quot; + this.features))
+<span class="nc" id="L38">                        this.url+</span>
+<span class="nc" id="L39">                        &quot;lat=&quot;+lat +</span>
+<span class="nc" id="L40">                        &quot;&amp;lon=&quot;+lon +</span>
+<span class="nc" id="L41">                        &quot;&amp;key=&quot;+this.key+</span>
+<span class="nc" id="L42">                        &quot;&amp;features=&quot; + this.features))</span>
 <span class="nc" id="L43">                .setHeader(&quot;User-Agent&quot;, &quot;Java 11 HttpClient Bot&quot;)</span>
 <span class="nc" id="L44">                .build();</span>
-<span class="nc" id="L45">        System.out.println(this.url+</span>
-                        &quot;lat=&quot;+lat +
-                        &quot;&amp;lon=&quot;+lon +
-                        &quot;&amp;key=&quot;+this.key+
-                        &quot;&amp;features=&quot; + this.features);
         
-<span class="nc" id="L51">        HttpResponse&lt;String&gt; response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="nc" id="L46">        HttpResponse&lt;String&gt; response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());</span>
 
-<span class="nc" id="L53">        return response.body();</span>
+<span class="nc" id="L48">        return response.body();</span>
     }
 
     @Override
     public AirRequest getAirQualityByLocal(double lat, double lon, String[] polutants, String[] health_recommendations) {
-<span class="fc" id="L58">        AirRequest airRequest = this.airRepository.getData(lat, lon);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (airRequest == null){</span>
+<span class="fc" id="L53">        AirRequest airRequest = this.airRepository.getData(lat, lon);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (airRequest == null){</span>
             try {
-<span class="nc" id="L61">                String getResult = sendGET(&quot;&quot; + lat, &quot;&quot; + lon);</span>
+<span class="nc" id="L56">                String getResult = sendGET(&quot;&quot; + lat, &quot;&quot; + lon);</span>
 //               airRequest = new AirRequest(getResult);
 
-<span class="nc" id="L64">                airRequest = this.airRepository.putData(lat, lon, getResult);</span>
-<span class="nc" id="L65">            } catch (Exception e){</span>
-<span class="nc" id="L66">                return null;</span>
-<span class="nc" id="L67">            }</span>
+<span class="nc" id="L59">                airRequest = this.airRepository.putData(lat, lon, getResult);</span>
+<span class="nc" id="L60">            } catch (Exception e){</span>
+<span class="nc" id="L61">                return null;</span>
+            }
         }
 
-<span class="fc" id="L70">        List&lt;String&gt; allFeatures = Arrays.asList(&quot;co&quot;, &quot;no2&quot;, &quot;o3&quot;, &quot;pm10&quot;, &quot;pm25&quot;, &quot;so2&quot;);</span>
-<span class="fc" id="L71">        List&lt;String&gt; featuresList = Arrays.asList(polutants);</span>
+<span class="fc" id="L65">        List&lt;String&gt; allFeatures = Arrays.asList(&quot;co&quot;, &quot;no2&quot;, &quot;o3&quot;, &quot;pm10&quot;, &quot;pm25&quot;, &quot;so2&quot;);</span>
+<span class="fc" id="L66">        List&lt;String&gt; featuresList = Arrays.asList(polutants);</span>
 
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        for (String feature: allFeatures) {</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">            if (!featuresList.contains(feature)) {</span>
-<span class="fc" id="L75">            	airRequest.excludeAirMetric(feature);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (String feature: allFeatures) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (!featuresList.contains(feature)) {</span>
+<span class="fc" id="L70">            	airRequest.excludeAirMetric(feature);</span>
             }
-<span class="fc" id="L77">        }</span>
+        }
 
-<span class="fc" id="L79">        List&lt;String&gt; allRecom = Arrays.asList(&quot;general_population&quot;, &quot;elderly&quot;, &quot;lung_diseases&quot;, &quot;heart_diseases&quot;, &quot;active&quot;, &quot;pregnant_women&quot;,&quot;children&quot;);</span>
-<span class="fc" id="L80">        List&lt;String&gt; recomList = Arrays.asList(health_recommendations);</span>
+<span class="fc" id="L74">        List&lt;String&gt; allRecom = Arrays.asList(&quot;general_population&quot;, &quot;elderly&quot;, &quot;lung_diseases&quot;, &quot;heart_diseases&quot;, &quot;active&quot;, &quot;pregnant_women&quot;,&quot;children&quot;);</span>
+<span class="fc" id="L75">        List&lt;String&gt; recomList = Arrays.asList(health_recommendations);</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (String recom: allRecom) {</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (!recomList.contains(recom)) {</span>
-<span class="fc" id="L84">                airRequest.excludeAirRecommendations(recom);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (String recom: allRecom) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (!recomList.contains(recom)) {</span>
+<span class="fc" id="L79">                airRequest.excludeAirRecommendations(recom);</span>
             }
-<span class="fc" id="L86">        }</span>
-<span class="fc" id="L87">        System.out.println(airRequest.toString());</span>
-<span class="fc" id="L88">        return airRequest;</span>
+        }
+<span class="fc" id="L82">        System.out.println(airRequest.toString());</span>
+<span class="fc" id="L83">        return airRequest;</span>
     }
 
     @Override
     public int getMisses() {
-<span class="nc" id="L93">        return airRepository.getMiss();</span>
+<span class="fc" id="L88">        return airRepository.getMiss();</span>
     }
 
     @Override
     public int getHits() {
-<span class="nc" id="L98">        return airRepository.getHit();</span>
+<span class="fc" id="L93">        return airRepository.getHit();</span>
     }
 
     @Override
     public int getRequests() {
-<span class="nc" id="L103">        return airRepository.getHit() + airRepository.getMiss();</span>
+<span class="fc" id="L98">        return airRepository.getHit() + airRepository.getMiss();</span>
     }
 
     @Override
     public void clearCache() {
-<span class="nc" id="L108">        airRepository.clear();</span>
-<span class="nc" id="L109">    }</span>
+<span class="fc" id="L103">        airRepository.clear();</span>
+<span class="fc" id="L104">    }</span>
 
 
 }
