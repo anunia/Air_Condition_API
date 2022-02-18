@@ -31,6 +31,7 @@ class PollutantsTest {
 
         assertFalse(so2.equals(co));
         assertTrue(co.equals(new CO(baqi, 22.2)));
+        assertFalse(co.equals(new CO(new BAQI(0, "b", "b"), 22.2)));
         assertFalse(co.equals(new CO(new BAQI(0, "b", "c"), 22.2)));
         assertFalse(co.equals(new CO(new BAQI(20, "b", "c"), 22.2)));
         assertFalse(co.equals("CO"));
