@@ -29,6 +29,7 @@ public class AirCoordTest {
         assertEquals(new AirCoord(0, 0), airCoord);
         
         assertTrue(airCoord.equals(airCoord));
+        assertFalse(airCoord.equals("test"));
         assertFalse(airCoord.equals(new AirCoord(2, 0)));
         assertFalse(airCoord.equals(new AirCoord(0, 2)));
     }
