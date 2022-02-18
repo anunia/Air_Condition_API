@@ -42,11 +42,6 @@ public class AirServiceImpl implements AirService {
                         "&features=" + this.features))
                 .setHeader("User-Agent", "Java 11 HttpClient Bot")
                 .build();
-        System.out.println(this.url+
-                        "lat="+lat +
-                        "&lon="+lon +
-                        "&key="+this.key+
-                        "&features=" + this.features);
         
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
