@@ -1,4 +1,4 @@
-# Air_Condition_API
+# Air_Condition_API                 [![github](https://img.shields.io/github/workflow/status/anunia/Air_Condition_API/Java%20CI%20with%20Maven)](https://github.com/anunia/Air_Condition_API/actions/workflows/maven.yml)           [![codecov](https://codecov.io/gh/anunia/Air_Condition_API/branch/main/graph/badge.svg?token=0H2RZ9M88I)](https://codecov.io/gh/anunia/Air_Condition_API)
 
 Air Condition API is using data collected from breezometer API. It presents information about air condition in choosen location. 
 
