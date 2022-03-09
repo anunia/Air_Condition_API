@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class AirRestController {
     @Autowired
     private AirService airService;
@@ -19,7 +22,7 @@ public class AirRestController {
     	return ResponseEntity.ok(airService.getAirQualityByLocal(lat, lon, polutants.split(","), health_recommendations.split(",")));
     }
 
-    @GetMapping("/cache")
+    @GetMapping("/api/cache")
     public ResponseEntity<HashMap<String, String>> getCache(){
         HashMap<String, String> cache = new HashMap<>();
         cache.put("Requests", ""+airService.getRequests());
@@ -31,5 +34,11 @@ public class AirRestController {
     @GetMapping("/clear")
     public void clearCache(){
         airService.clearCache();
+    }
+    
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) throws ServletException {
+       request.logout();
+       return "/";
     }
 }
